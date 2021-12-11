@@ -1,6 +1,6 @@
 
-const Button = ({ type = "submit", children }) => {
-    return (<button id = "btn" type={type}>{children}</button>)
+const Button = ({ type = "submit", children, onClick = () => {} }) => {
+    return (<button id = "btn" type={type} onClick = {onClick}>{children}</button>)
 }
 
 export default Button;

@@ -5,7 +5,7 @@ import Main from "pages/Main";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { appConfig } from "configs";
 import { LS } from "utils";
-import {UserPage, ProductsPage} from 'pages/Main/components/Pages';
+import { UsersPage, UserPage, ProductsPage } from "pages/Main/components/Pages";
 function App() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -19,7 +19,8 @@ function App() {
       <Routes>
         <Route path="/Login" element={<Login />} />
         <Route path="/" element={<Main />}>
-          <Route path="users" element={<UserPage />} />
+          <Route path="users" element={<UsersPage />} />
+          <Route path="user/:id" element={<UserPage />} />
           <Route path="products" element={<ProductsPage />} />
         </Route>
       </Routes>

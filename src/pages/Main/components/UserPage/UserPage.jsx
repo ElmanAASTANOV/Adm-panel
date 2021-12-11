@@ -1,27 +1,28 @@
-import Table from "components/Table";
-import { Pagination } from 'antd';
-import { getAll as getAllUsers } from 'api/Users';
+import { get as getUser, update as updateUser } from 'api/Users';
+import { Input } from 'components/Input';
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Button } from 'components/Button';
 
-const pageSize = 10;
 const UserPage = () => {
-
-    const [users, setUsers] = useState({})
-    const [currentPage, setCurrentPage] = useState(1);
-    console.log(users)
+    const [user, setUser] = useState({ loading: false })
+    const { id } = useParams();
     useEffect(() => {
-        getAllUsers({ page: 1, count: pageSize })
-            .then(res => setUsers(res?.data || []))
-            .catch(err => console.log(err))
-    }, [])
-    const columns = [{ title: "Name", key: "first_name" }, { title: "Surname", key: "last_name" }, { title: "Username", key: "username" }, { title: "Online", key: "is_active", render: (data) => <Link to="/">{data.is_active ? "online" : "offline"}</Link> }]
+        setUser(old => ({ ...old, loading: true }));
+        getUser({ id })
+            .then(res => setUser(old => ({ ...old, ...(res?.data || {}), loading: false })))
+            .catch(err => { console.log(err); setUser(old => ({ ...old, loading: false })) })
+
+    }, [id])
     return (
         <div className="user-page">
-            <Table columns={columns} data={users.users} />
-            <Pagination current={currentPage} onChange = {(page) => {
-                setCurrentPage(page)
-            }} total={users.total} defaultPageSize = {pageSize} showSizeChanger={false} />
+            <Input value={user['first_name']} onChange={text => setUser(old => ({ ...old, first_name: text }))} />
+            <Input value={user['last_name']} onChange={text => setUser(old => ({ ...old, last_name: text }))} />
+            <Input value={user['username']} onChange={text => setUser(old => ({ ...old, username: text }))} />
+            <Button onClick = {()=>{
+                const {first_name, last_name, username} = user;
+               updateUser({id, user: {first_name, last_name, username, roles: [1,2]}}).then().catch()
+            }}>Save</Button>
         </div>
     )
 }
