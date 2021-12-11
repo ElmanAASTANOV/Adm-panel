@@ -2,9 +2,11 @@ import Table from "components/Table";
 import { getAll as getAllUsers } from 'api/Users';
 import { useEffect, useState } from "react";
 import {Link} from 'react-router-dom';
+
 const UserPage = () => {
+    
     const [users, setUsers] = useState([])
-    console.log(users)
+    
     useEffect(() => {
         getAllUsers({page: 1, count:4})
             .then(res => setUsers(res?.data?.users || []))

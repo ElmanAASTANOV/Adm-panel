@@ -4,6 +4,7 @@ import { mainPageMenu } from 'menu';
 import Header from './components/Header';
 import Pages from './components/Pages';
 import { Outlet, useNavigate } from 'react-router-dom';
+import React from 'react';
 
 const Main = () => {
     const [sideBarVisible, setSideBarVisible] = useState(true)
