@@ -1,15 +1,15 @@
 import './style.scss'
-import ReactLoading from 'react-loading';
+import Loading from 'components/Loading';
 
-const Table = ({ columns = [], data = [], loading = false, onClick = (record) => {} }) => {
+const Table = ({ columns = [], data = [], loading = false, onClick = (record) => { } }) => {
   return (
-    <>
+    <div className='table-container'>
 
+      { loading && <Loading />}
       <table>
-       { loading && <div className="table-loading"><ReactLoading type = "spin" color = "#1877f2"/></div>}
         <thead>
           <tr>
-            {columns?.map((column, index) => (<th key={index}>{column.title}</th>))}
+            {columns?.map((column, index) => (<th key={index}><span className="data">{column.title}</span></th>))}
           </tr>
         </thead>
         <tbody>
@@ -17,7 +17,7 @@ const Table = ({ columns = [], data = [], loading = false, onClick = (record) =>
           {
             data?.map((d, index) => {
               return (
-                <tr onClick = {() =>{
+                <tr onClick={() => {
                   onClick(d)
                 }} key={index}>
                   {
@@ -29,7 +29,7 @@ const Table = ({ columns = [], data = [], loading = false, onClick = (record) =>
                         x = d[column?.key];
                       }
                       return (
-                        <td key={iIndex}>{x}</td>
+                        <td key={iIndex}><span className="data">{x}</span></td>
                       )
                     })
                   }
@@ -40,7 +40,7 @@ const Table = ({ columns = [], data = [], loading = false, onClick = (record) =>
         </tbody>
 
       </table>
-    </>);
+    </div>);
 }
 
 export default Table;

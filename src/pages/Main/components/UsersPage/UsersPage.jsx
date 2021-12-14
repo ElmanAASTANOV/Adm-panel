@@ -11,11 +11,10 @@ const UserPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
     useEffect(() => {
-        setUsers(old => ({...old, loading: true}));
+        setUsers && setUsers(old => ({...old, loading: true}));
         getAllUsers({ page: currentPage, count: pageSize })
             .then(res => setUsers( old => ({...old, ...(res?.data || {}), loading: false})))
-            .catch(err =>{  console.log(err); setUsers(old => ({...old, loading: false})) } )
-
+            .catch(err =>{  console.log(err); setUsers(old => ({...old, loading: false}))} )
     }, [currentPage])
     return (
         <div className="users-page">
